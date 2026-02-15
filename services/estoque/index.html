@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="pt-br">
+    <meta charset="UTF-8">
+    <title>Serviço de Estoque</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #e67e22;
+            margin: 0 0 20px 0;
+        }
+
+        .status {
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #ecf0f1;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📊 Serviço de Estoque</h1>
+        <div class="status">✅ Online</div>
+        <p><strong>Endpoints disponíveis:</strong></p>
+        <ul>
+            <li>GET /health - Status do serviço</li>
+            <li>GET /data.json - Lista de produtos em estoque</li>
+        </ul>
+    </div>
+</body>
+
+</html>

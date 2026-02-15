@@ -1,0 +1,112 @@
+version: '3.8'
+
+networks:
+  loja-veloz-network:
+    driver: bridge
+
+volumes:
+  prometheus-data:
+  grafana-data:
+
+services:
+  # Serviço de Pedidos
+  pedidos:
+    build:
+      context: ../services/pedidos
+      dockerfile: Dockerfile
+    container_name: loja-veloz-pedidos
+    ports:
+      - "8081:8080"
+    networks:
+      - loja-veloz-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # Serviço de Pagamentos
+  pagamentos:
+    build:
+      context: ../services/pagamentos
+      dockerfile: Dockerfile
+    container_name: loja-veloz-pagamentos
+    ports:
+      - "8082:8080"
+    networks:
+      - loja-veloz-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # Serviço de Estoque
+  estoque:
+    build:
+      context: ../services/estoque
+      dockerfile: Dockerfile
+    container_name: loja-veloz-estoque
+    ports:
+      - "8083:8080"
+    networks:
+      - loja-veloz-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ../services/api-gateway
+      dockerfile: Dockerfile
+    container_name: loja-veloz-api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - loja-veloz-network
+    depends_on:
+      pedidos:
+        condition: service_healthy
+      pagamentos:
+        condition: service_healthy
+      estoque:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: loja-veloz-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - loja-veloz-network
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: loja-veloz-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - loja-veloz-network
+    depends_on:
+      - prometheus

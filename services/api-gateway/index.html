@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja Veloz - API Gateway</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+
+    .status {
+      background: #27ae60;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+
+    .endpoint {
+      background: #ecf0f1;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 5px;
+      border-left: 4px solid #3498db;
+    }
+
+    .endpoint h3 {
+      margin: 0 0 10px 0;
+      color: #2c3e50;
+    }
+
+    code {
+      background: #34495e;
+      color: #ecf0f1;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .method {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-weight: bold;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .get {
+      background: #3498db;
+      color: white;
+    }
+
+    .post {
+      background: #2ecc71;
+      color: white;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      padding: 5px 0;
+    }
+
+    .service-section {
+      margin: 30px 0;
+    }
+
+    .test-button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .test-button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🚀 Loja Veloz - API Gateway</h1>
+    <div class="status">✅ Sistema Online</div>
+
+    <div class="endpoint">
+      <h3>🏥 Gateway Endpoints</h3>
+      <ul>
+        <li><span class="method get">GET</span> <code>/health</code> - Status do API Gateway</li>
+        <li><span class="method get">GET</span> <code>/metrics</code> - Métricas do Nginx</li>
+      </ul>
+    </div>
+
+    <div class="service-section">
+      <h2>📦 Serviço de Pedidos</h2>
+      <div class="endpoint">
+        <h3>Endpoints Disponíveis:</h3>
+        <ul>
+          <li><span class="method get">GET</span> <code>/api/pedidos/health</code> - Health check</li>
+          <li><span class="method get">GET</span> <code>/api/pedidos/data.json</code> - Lista de pedidos</li>
+          <li><span class="method get">GET</span> <code>/api/pedidos/</code> - Página do serviço</li>
+        </ul>
+        <button class="test-button" onclick="testEndpoint('/api/pedidos/health')">🧪 Testar Health</button>
+      </div>
+    </div>
+
+    <div class="service-section">
+      <h2>💳 Serviço de Pagamentos</h2>
+      <div class="endpoint">
+        <h3>Endpoints Disponíveis:</h3>
+        <ul>
+          <li><span class="method get">GET</span> <code>/api/pagamentos/health</code> - Health check</li>
+          <li><span class="method get">GET</span> <code>/api/pagamentos/data.json</code> - Lista de pagamentos</li>
+          <li><span class="method get">GET</span> <code>/api/pagamentos/</code> - Página do serviço</li>
+        </ul>
+        <button class="test-button" onclick="testEndpoint('/api/pagamentos/health')">🧪 Testar Health</button>
+      </div>
+    </div>
+
+    <div class="service-section">
+      <h2>📊 Serviço de Estoque</h2>
+      <div class="endpoint">
+        <h3>Endpoints Disponíveis:</h3>
+        <ul>
+          <li><span class="method get">GET</span> <code>/api/estoque/health</code> - Health check</li>
+          <li><span class="method get">GET</span> <code>/api/estoque/data.json</code> - Lista de produtos</li>
+          <li><span class="method get">GET</span> <code>/api/estoque/</code> - Página do serviço</li>
+        </ul>
+        <button class="test-button" onclick="testEndpoint('/api/estoque/health')">🧪 Testar Health</button>
+      </div>
+    </div>
+
+    <hr style="margin: 30px 0;">
+    <p><small>Version: 1.0.0 | DevOps Demo Project | Arquitetura de Microserviços</small></p>
+  </div>
+
+  <script>
+    function testEndpoint(path) {
+      fetch(path)
+        .then(response => response.json())
+        .then(data => {
+          alert('✅ Sucesso!\n\n' + JSON.stringify(data, null, 2));
+        })
+        .catch(error => {
+          alert('❌ Erro ao testar endpoint:\n' + error);
+        });
+    }
+  </script>
+</body>
+
+</html>
