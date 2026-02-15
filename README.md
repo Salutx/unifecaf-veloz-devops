@@ -37,14 +37,14 @@ Projeto de demonstração de arquitetura cloud-native com foco em **práticas De
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/your-org/loja-veloz.git
-cd loja-veloz
+git clone [https://github.com/your-org/loja-veloz.git](https://github.com/Salutx/unifecaf-veloz-devops.git)
+cd unifecaf-veloz-devops
 ```
 
 ### 2. Suba o ambiente local
 
 ```bash
-./scripts/setup-local.sh
+./scripts/setup-kubernetes.sh
 ```
 
 ### 3. Teste os endpoints
@@ -61,6 +61,9 @@ cd loja-veloz
 - 📊 **Estoque**: http://localhost:8083
 - 📈 **Prometheus**: http://localhost:9090
 - 📊 **Grafana**: http://localhost:3000 (admin/admin)
+
+Observação: Caso não funcione o proxy-reverse, utilize a inicialização pelo minikube service:
+`minikube service [service-name] -n loja-veloz`
 
 ## 🧪 Testando
 
@@ -149,14 +152,6 @@ docker-compose down -v && docker system prune -af
 - [Arquitetura Detalhada](docs/architecture.md)
 - [Runbook de Operação](docs/runbook.md)
 - [Guia de Troubleshooting](docs/troubleshooting.md)
-
-## 🎯 Próximos Passos
-
-- [ ] Implementar Service Mesh (Istio)
-- [ ] Adicionar tracing distribuído (Jaeger)
-- [ ] GitOps com ArgoCD
-- [ ] Testes de carga (k6)
-- [ ] Chaos Engineering
 
 ## 📄 Licença
 
